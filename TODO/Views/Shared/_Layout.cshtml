@@ -10,6 +10,7 @@
 </head>
 <body>
     <header>
+        
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TODO</a>
@@ -32,6 +33,16 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @if(TempData["Success"]!=null){
+                <div class="alert alert-success"> 
+                    @TempData["Success"]
+                </div>
+            }
+            @if(TempData["Error"]!=null){
+                <div class="alert alert-danger">
+                    @TempData["Error"]
+                </div>
+            }
             @RenderBody()
         </main>
     </div>
