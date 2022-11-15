@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using TODO.Data;
 using TODO.Models;
 
 namespace TODO.Controllers
@@ -7,16 +9,31 @@ namespace TODO.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ApplicationDBContext _context;
+        public HomeController(ILogger<HomeController> logger, ApplicationDBContext context )
         {
             _logger = logger;
+            this._context = context;
         }
 
-        public IActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            //Task<ActionResult> provides returning data from db async
+            //IQueryable is an object that provides remote control to database
+            IQueryable<TodoList> items = from i in _context.ToDoList orderby i.Id select i;
+            List<TodoList> todoList = await items.ToListAsync();
+            return View(todoList);
         }
+
+
+
+
+
+
+
+
+
+
 
         public IActionResult Privacy()
         {
