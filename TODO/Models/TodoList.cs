@@ -8,6 +8,10 @@ namespace TODO.Models
         public int Id { get; set; }
         [Required]
         public string Content { get; set; }
+        public bool IsDone { get; set; }
+
+        
+        public DateTime? date { get; set; }
 
         //private readonly ApplicationDBContext _context;
         //public TodoList(ApplicationDBContext context)

@@ -6,6 +6,8 @@
 
 @{
     ViewData["Title"] = "Index";
+    ViewData["Done"] = "false";
+     
 }
 
 <html>
@@ -51,12 +53,29 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td class="text-black-50 h5  border-1 ps-5">
+                            @*text-decoration-line-through*@
+                            <td class="text-black-50 h5  border-1 ps-5 ">
                                     @item.Content
                             </td>
                             <td>
-                                <a class="btn btn-primary ps-4 pe-4 me-2" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                <a class="btn btn-danger  ps-3 pe-3 ms-2" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                @if (!@item.IsDone)
+                                {
+                                    <a class="btn btn-success ps-4 pe-4 me-2" asp-action="Done" asp-route-id="@item.Id">Done</a> 
+                                    <label>|</label>
+                                    <a class="btn btn-primary ps-4 pe-4 ms-2 me-2" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                    <label>|</label>
+                                    <a class="btn btn-danger  ps-3 pe-3 ms-2" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                }                             
+                                
+                                @if (@item.IsDone)
+                                {
+                                    <a class="btn btn-danger  ps-5 pe-5 ms-2" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    <label class="pe-5 text-light h5 ">Done at @item.date  </label>
+                                    
+                                    
+                                 
+                                }
+
                             </td>
                         </tr>
                     }

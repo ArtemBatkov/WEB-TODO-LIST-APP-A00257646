@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using TODO.Data;
 using TODO.Models;
@@ -21,8 +22,8 @@ namespace TODO.Controllers
         {
             //Task<ActionResult> provides returning data from db async
             //IQueryable is an object that provides remote control to database
-            IQueryable<TodoList> items = from i in context.ToDoList orderby i.Id select i;
-            List<TodoList> todoList = await items.ToListAsync();
+            IQueryable<TodoList> items = from i in context.ToDoList orderby i.Id select i;      
+            List<TodoList> todoList = await items.OrderByDescending(i=>i.Id).ToListAsync();            
             return View(todoList);
         }
 
@@ -95,10 +96,27 @@ namespace TODO.Controllers
         }
 
 
-        public IActionResult Privacy()
+        //Done post
+        public async Task<ActionResult> Done(int id)
         {
-            return View();
+            TodoList item = await context.ToDoList.FindAsync(id);
+            if (item == null)
+            {
+                TempData["Error"] = "The item doesn't exist!";
+            }
+            else
+            {
+                item.IsDone = true;
+                item.date = DateTime.Now;
+                context.ToDoList.Update(item);
+                await context.SaveChangesAsync();
+                TempData["Error"] = "The item has been marked as done!";
+            }
+            return RedirectToAction("Index");
         }
+
+
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
