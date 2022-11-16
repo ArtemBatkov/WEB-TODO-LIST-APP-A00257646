@@ -49,7 +49,50 @@ namespace TODO.Controllers
             return View(item);
         }
 
+        //Edit some note
+        public async Task<ActionResult> Edit(int id)
+        {
+            TodoList item = await context.ToDoList.FindAsync(id);
+            if(item == null)
+            {
+                return NotFound();
+            }
+            return View(item);
+        }
 
+        //Edit -- save button
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(TodoList item)
+        {
+            if (ModelState.IsValid)
+            {
+                context.Update(item);
+                await context.SaveChangesAsync();
+                TempData["Success"] = "The item has been updated!";
+                return RedirectToAction("Index");
+            }
+            return View(item);
+        }
+
+
+
+        //Delete some note
+        public async Task<ActionResult> Delete(int id)
+        {
+            TodoList item = await context.ToDoList.FindAsync(id);
+            if (item == null)
+            {
+                TempData["Error"] = "The item doesn't exist!";
+            }
+            else
+            {
+                context.ToDoList.Remove(item);
+                await context.SaveChangesAsync();
+                TempData["Error"] = "The item has been deleted!";
+            }
+            return RedirectToAction("Index");
+        }
 
 
         public IActionResult Privacy()
