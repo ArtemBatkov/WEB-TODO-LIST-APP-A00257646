@@ -1,6 +1,8 @@
-﻿body {
-    background-image:   main_bg.png ;
+﻿
+
+body {
+    background-image:  url('create_bg2.svg')  ;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-size:cover;
 
 }

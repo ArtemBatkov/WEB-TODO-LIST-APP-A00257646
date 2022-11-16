@@ -1,0 +1,45 @@
+﻿@model TODO.Models.TodoList
+
+@{
+    ViewData["Title"] = "Create";
+}
+ 
+    <head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    </head>
+
+    <body>
+    <h1 class="text-white border-1 ps-5">
+        Create a new ToDo!
+    </h1>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Content" class="control-label text-white h5 ms-3"></label>
+                    <br />
+                    <input asp-for="Content" class="form-control" />  
+                    <br />
+                    <span asp-validation-for="Content" class="text-danger"></span>                  
+                </div>
+                <br />
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
+    <div>
+        <a class="btn btn-dark" asp-action="Index">Back to List</a>
+    </div>
+    </body>
+  
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

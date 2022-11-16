@@ -9,10 +9,10 @@ namespace TODO.Models
         [Required]
         public string Content { get; set; }
 
-        private readonly ApplicationDBContext _context;
-        public TodoList(ApplicationDBContext context)
-        {
-            _context = context;
-        }
+        //private readonly ApplicationDBContext _context;
+        //public TodoList(ApplicationDBContext context)
+        //{
+        //    this._context = context;
+        //}
     }
 }
